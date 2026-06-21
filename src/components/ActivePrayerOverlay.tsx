@@ -5,6 +5,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Capacitor } from '@capacitor/core';
+import { App } from '@capacitor/app';
 import { 
   Flame, 
   Phone, 
@@ -55,6 +57,73 @@ export default function ActivePrayerOverlay({
   
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  // 1. Android/Web Back Button Block Logic
+  useEffect(() => {
+    let backButtonListener: any = null;
+
+    // Capacitor Native Android Hardware Back Button override
+    if (Capacitor.isNativePlatform()) {
+      App.addListener('backButton', () => {
+        console.log('Android Hardware back button was pressed. Blocked during lock mode.');
+        // Registering listener in Capacitor automatically intercepts/prevents default app close
+      }).then((listener) => {
+        backButtonListener = listener;
+      });
+    }
+
+    // Web-based fallback history pushState loop to prevent swipe-back / device-back
+    const handlePopState = () => {
+      window.history.pushState(null, '', window.location.href);
+    };
+
+    window.history.pushState(null, '', window.location.href);
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      if (backButtonListener) {
+        backButtonListener.remove();
+      }
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+
+  // 2. Keep Screen Awake using standard Web wakeLock API
+  useEffect(() => {
+    let wakeLock: any = null;
+
+    const requestWakeLock = async () => {
+      try {
+        if ('wakeLock' in navigator) {
+          wakeLock = await (navigator as any).wakeLock.request('screen');
+          console.log('Screen Wake Lock acquired.');
+        }
+      } catch (err) {
+        console.warn('Screen Wake lock request failed:', err);
+      }
+    };
+
+    requestWakeLock();
+
+    // Re-request wakeLock if app returns from background
+    const handleVisibilityChange = async () => {
+      if (wakeLock !== null && document.visibilityState === 'visible') {
+        await requestWakeLock();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (wakeLock) {
+        wakeLock.release().then(() => {
+          wakeLock = null;
+          console.log('Screen Wake Lock release complete.');
+        }).catch((e: any) => console.error('Error releasing wake lock:', e));
+      }
+    };
+  }, []);
 
   // Parse time details
   useEffect(() => {
