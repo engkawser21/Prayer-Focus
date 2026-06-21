@@ -1,0 +1,6 @@
+{
+  "name": "Prayer Focus",
+  "description": "An interactive tool designed to help Muslims stay committed to Salah by restricting phone usage during scheduled prayer periods.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
