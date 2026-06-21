@@ -10,6 +10,11 @@ import {
   Flame, 
   ShieldAlert, 
   VolumeX,
+  Home,
+  Calendar,
+  Zap,
+  TrendingUp,
+  Settings,
 } from 'lucide-react';
 
 import { PrayerSchedule, PrayerLog, UserPreferences, CityPreset } from './types';
@@ -770,31 +775,31 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* Primary Navigation & Body Header Container */}
-      <header className="border-b border-zinc-100 dark:border-emerald-950/45 shrink-0 bg-white dark:bg-[#080F0C] sticky top-0 z-40 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      {/* Responsive & Clean Header Banner */}
+      <header className="border-b border-zinc-100 dark:border-emerald-950/45 shrink-0 bg-white dark:bg-[#080F0C] sticky top-0 z-40 shadow-sm py-3 px-4 md:px-8">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
           
           {/* Logo brand */}
-          <div className="flex items-center gap-2">
-            <span className="text-2xl leading-none">🕌</span>
-            <div className="text-left">
-              <h1 className="font-display font-black text-md text-zinc-900 dark:text-white leading-none">
+          <div className="flex items-center gap-2.5">
+            <span className="text-2xl md:text-3xl leading-none font-sans">🕌</span>
+            <div className="text-left font-sans">
+              <h1 className="font-display font-black text-sm md:text-base text-zinc-900 dark:text-white leading-none">
                 {dict.appName}
               </h1>
-              <p className="text-[10px] text-[#D4AF37] tracking-widest font-mono uppercase mt-1 leading-none">
+              <p className="text-[9px] md:text-[10px] text-[#D4AF37] tracking-wider font-mono uppercase mt-1 leading-none">
                 {dict.focusTagline}
               </p>
             </div>
           </div>
 
-          {/* Navigation Tab Elements */}
-          <nav className="flex items-center gap-1.5 bg-zinc-50 dark:bg-black/40 border border-zinc-200/50 dark:border-emerald-950/60 p-1 rounded-2xl overflow-x-auto max-w-full">
+          {/* Desktop/Tablet Navigation Tab Elements (Hidden on mobile) */}
+          <nav className="hidden md:flex items-center gap-1 p-1 bg-zinc-50 dark:bg-black/35 border border-zinc-200/50 dark:border-[#1F3329] rounded-2xl font-sans">
             <button 
-              id="tab-btn-dashboard"
+              id="tab-btn-dashboard-desktop"
               onClick={() => setActiveTab('dashboard')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-all shrink-0 ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-all ${
                 activeTab === 'dashboard' 
-                  ? 'bg-emerald-600 dark:bg-emerald-950/45 text-white dark:text-emerald-300 border border-emerald-500/10' 
+                  ? 'bg-emerald-600 dark:bg-[#1E3E30] text-white dark:text-emerald-300 border border-emerald-500/10 font-bold' 
                   : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-white'
               }`}
             >
@@ -802,11 +807,11 @@ export default function App() {
             </button>
 
             <button 
-              id="tab-btn-schedules"
+              id="tab-btn-schedules-desktop"
               onClick={() => setActiveTab('schedules')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-all shrink-0 ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-all ${
                 activeTab === 'schedules' 
-                  ? 'bg-emerald-600 dark:bg-emerald-950/45 text-white dark:text-emerald-300 border border-emerald-500/10' 
+                  ? 'bg-emerald-600 dark:bg-[#1E3E30] text-white dark:text-emerald-300 border border-emerald-500/10 font-bold' 
                   : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-white'
               }`}
             >
@@ -814,11 +819,11 @@ export default function App() {
             </button>
 
             <button 
-              id="tab-btn-simulator"
+              id="tab-btn-simulator-desktop"
               onClick={() => setActiveTab('simulator')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-all shrink-0 ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-all ${
                 activeTab === 'simulator' 
-                  ? 'bg-emerald-600 dark:bg-emerald-950/45 text-white dark:text-emerald-300 border border-emerald-500/10' 
+                  ? 'bg-emerald-600 dark:bg-[#1E3E30] text-white dark:text-emerald-300 border border-emerald-500/10 font-bold' 
                   : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-white'
               }`}
             >
@@ -826,11 +831,11 @@ export default function App() {
             </button>
 
             <button 
-              id="tab-btn-stats"
+              id="tab-btn-stats-desktop"
               onClick={() => setActiveTab('stats')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-all shrink-0 ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-all ${
                 activeTab === 'stats' 
-                  ? 'bg-emerald-600 dark:bg-emerald-950/45 text-white dark:text-emerald-300 border border-emerald-500/10' 
+                  ? 'bg-emerald-600 dark:bg-[#1E3E30] text-white dark:text-emerald-300 border border-emerald-500/10 font-bold' 
                   : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-white'
               }`}
             >
@@ -838,11 +843,11 @@ export default function App() {
             </button>
 
             <button 
-              id="tab-btn-settings"
+              id="tab-btn-settings-desktop"
               onClick={() => setActiveTab('settings')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-all shrink-0 ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-all ${
                 activeTab === 'settings' 
-                  ? 'bg-emerald-600 dark:bg-emerald-950/45 text-white dark:text-emerald-300 border border-emerald-500/10' 
+                  ? 'bg-emerald-600 dark:bg-[#1E3E30] text-white dark:text-emerald-300 border border-emerald-500/10 font-bold' 
                   : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-white'
               }`}
             >
@@ -850,11 +855,18 @@ export default function App() {
             </button>
           </nav>
 
+          {/* Quick status badge for mobile / visual element on desktop */}
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] uppercase font-mono font-bold px-2 py-0.5 bg-emerald-50 dark:bg-emerald-950/10 text-emerald-800 dark:text-emerald-400 border border-emerald-100/80 dark:border-[#204033] rounded select-none">
+              {lang === 'bn' ? 'অনলাইন গার্ড' : 'Online Guard'}
+            </span>
+          </div>
+
         </div>
       </header>
 
       {/* Main Container Layout Body */}
-      <main id="main-content-layout" className="flex-1 max-w-7xl mx-auto px-4 md:px-8 py-8 w-full">
+      <main id="main-content-layout" className="flex-1 max-w-7xl mx-auto px-4 md:px-8 py-5 md:py-8 pb-24 w-full">
         {activeTab === 'dashboard' && (
           <DashboardTab 
             schedules={schedules}
@@ -916,7 +928,7 @@ export default function App() {
       </main>
 
        {/* Footer copyright */}
-      <footer className="border-t border-zinc-100 dark:border-emerald-950/45 py-8 shrink-0 bg-white dark:bg-[#070F0C] text-xs text-zinc-400 select-none">
+      <footer className="border-t border-zinc-100 dark:border-emerald-950/45 pt-8 pb-24 md:pb-8 shrink-0 bg-white dark:bg-[#070F0C] text-xs text-zinc-400 select-none">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1 text-center md:text-left">
             <p className="font-semibold text-zinc-800 dark:text-zinc-200">{dict.copyrightText}</p>
@@ -932,6 +944,103 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* Persistent Touch-Optimized Bottom Navigation Bar (Hidden on Desktop) */}
+      <nav id="mobile-bottom-nav" className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-[#070F0C]/95 backdrop-blur-lg border-t border-zinc-200/50 dark:border-emerald-950/45 pb-safe shadow-[0_-4px_24px_rgba(0,0,0,0.06)] font-sans">
+        <div className="max-w-md mx-auto px-1.5 h-16 flex items-center justify-around">
+          
+          <button 
+            id="tab-btn-dashboard"
+            onClick={() => setActiveTab('dashboard')}
+            className={`flex flex-col items-center justify-center flex-1 h-full py-1 text-center font-sans transition-all duration-150 relative min-h-[48px] select-none ${
+              activeTab === 'dashboard' 
+                ? 'text-emerald-600 dark:text-[#D4AF37] scale-102 font-bold' 
+                : 'text-zinc-400 dark:text-zinc-500 hover:text-zinc-650 dark:hover:text-zinc-300'
+            }`}
+          >
+            <Home className="w-5 h-5 mb-1 shrink-0" />
+            <span className="text-[9px] font-medium tracking-tight leading-none truncate max-w-full px-0.5">
+              {dict.tabOverview}
+            </span>
+            {activeTab === 'dashboard' && (
+              <span className="absolute bottom-1 w-1 h-1 rounded-full bg-emerald-600 dark:bg-[#D4AF37]" />
+            )}
+          </button>
+
+          <button 
+            id="tab-btn-schedules"
+            onClick={() => setActiveTab('schedules')}
+            className={`flex flex-col items-center justify-center flex-1 h-full py-1 text-center font-sans tracking-tight transition-all duration-150 relative min-h-[48px] select-none ${
+              activeTab === 'schedules' 
+                ? 'text-emerald-600 dark:text-[#D4AF37] scale-102 font-bold' 
+                : 'text-zinc-400 dark:text-zinc-500 hover:text-zinc-650 dark:hover:text-zinc-300'
+            }`}
+          >
+            <Calendar className="w-5 h-5 mb-1 shrink-0" />
+            <span className="text-[9px] font-medium tracking-tight leading-none truncate max-w-full px-0.5">
+              {dict.tabSchedules}
+            </span>
+            {activeTab === 'schedules' && (
+              <span className="absolute bottom-1 w-1 h-1 rounded-full bg-emerald-600 dark:bg-[#D4AF37]" />
+            )}
+          </button>
+
+          <button 
+            id="tab-btn-simulator"
+            onClick={() => setActiveTab('simulator')}
+            className={`flex flex-col items-center justify-center flex-1 h-full py-1 text-center font-sans tracking-tight transition-all duration-150 relative min-h-[48px] select-none ${
+              activeTab === 'simulator' 
+                ? 'text-emerald-600 dark:text-[#D4AF37] scale-102 font-bold' 
+                : 'text-zinc-400 dark:text-zinc-500 hover:text-zinc-650 dark:hover:text-zinc-300'
+            }`}
+          >
+            <Zap className="w-5 h-5 mb-1 shrink-0" />
+            <span className="text-[9px] font-medium tracking-tight leading-none truncate max-w-full px-0.5">
+              {lang === 'bn' ? 'গার্ড' : 'Accessibility'}
+            </span>
+            {activeTab === 'simulator' && (
+              <span className="absolute bottom-1 w-1 h-1 rounded-full bg-emerald-600 dark:bg-[#D4AF37]" />
+            )}
+          </button>
+
+          <button 
+            id="tab-btn-stats"
+            onClick={() => setActiveTab('stats')}
+            className={`flex flex-col items-center justify-center flex-1 h-full py-1 text-center font-sans tracking-tight transition-all duration-150 relative min-h-[48px] select-none ${
+              activeTab === 'stats' 
+                ? 'text-emerald-600 dark:text-[#D4AF37] scale-102 font-bold' 
+                : 'text-zinc-400 dark:text-zinc-500 hover:text-zinc-650 dark:hover:text-zinc-300'
+            }`}
+          >
+            <TrendingUp className="w-5 h-5 mb-1 shrink-0" />
+            <span className="text-[9px] font-medium tracking-tight leading-none truncate max-w-full px-0.5">
+              {dict.tabAnalytics}
+            </span>
+            {activeTab === 'stats' && (
+              <span className="absolute bottom-1 w-1 h-1 rounded-full bg-emerald-600 dark:bg-[#D4AF37]" />
+            )}
+          </button>
+
+          <button 
+            id="tab-btn-settings"
+            onClick={() => setActiveTab('settings')}
+            className={`flex flex-col items-center justify-center flex-1 h-full py-1 text-center font-sans tracking-tight transition-all duration-150 relative min-h-[48px] select-none ${
+              activeTab === 'settings' 
+                ? 'text-emerald-600 dark:text-[#D4AF37] scale-102 font-bold' 
+                : 'text-zinc-400 dark:text-zinc-500 hover:text-zinc-650 dark:hover:text-zinc-300'
+            }`}
+          >
+            <Settings className="w-5 h-5 mb-1 shrink-0" />
+            <span className="text-[9px] font-medium tracking-tight leading-none truncate max-w-full px-0.5">
+              {dict.tabSettings}
+            </span>
+            {activeTab === 'settings' && (
+              <span className="absolute bottom-1 w-1 h-1 rounded-full bg-emerald-600 dark:bg-[#D4AF37]" />
+            )}
+          </button>
+
+        </div>
+      </nav>
 
     </div>
   );

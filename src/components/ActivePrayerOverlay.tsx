@@ -254,14 +254,14 @@ export default function ActivePrayerOverlay({
                   <div className="grid grid-cols-2 gap-2 mb-4">
                     <button 
                       id="dial-911"
-                      onClick={() => setActiveCallSim(lang === 'bn' ? "৯১১ (জরুরি সেবা)" : "911 (Global Emergency)")}
+                      onClick={() => setActiveCallSim(dict.overlayEmergencyGlobal)}
                       className="p-3 bg-red-950/45 hover:bg-red-900/60 border border-red-900/40 rounded-xl text-xs font-semibold text-red-300 flex items-center gap-2 justify-center cursor-pointer"
                     >
                       🚒 {dict.emergencyCommDialerBtn}
                     </button>
                     <button 
                       id="dial-family"
-                      onClick={() => setActiveCallSim(lang === 'bn' ? "পারিবারিক অভিভাবক" : "Family Guardian")}
+                      onClick={() => setActiveCallSim(dict.overlayEmergencyFamily)}
                       className="p-3 bg-zinc-800/80 hover:bg-zinc-700/80 border border-zinc-700 rounded-xl text-xs font-semibold text-zinc-300 flex items-center gap-2 justify-center cursor-pointer"
                     >
                       👴 {dict.dialFamilyBtn}
@@ -274,7 +274,7 @@ export default function ActivePrayerOverlay({
                       type="tel"
                       value={dialNumber}
                       onChange={(e) => setDialNumber(e.target.value.replace(/[^0-9+*#]/g, ''))}
-                      placeholder={lang === 'bn' ? 'ফোন নাম্বার লিখুন...' : 'Enter phone number...'}
+                      placeholder={dict.overlayEmergencyPlaceholder}
                       className="w-full bg-black/50 border border-emerald-900 px-4 py-3 rounded-lg text-white font-mono tracking-wider focus:outline-none focus:border-emerald-400 placeholder-white/30 text-center text-lg"
                     />
                   </div>
@@ -305,7 +305,7 @@ export default function ActivePrayerOverlay({
           >
             <div className="flex items-center justify-between">
               <h3 className="font-display text-emerald-400 text-sm font-semibold flex items-center gap-2 text-left">
-                <Camera className="w-4 h-4" /> {lang === 'bn' ? 'জরুরি ক্যামেরা স্ন্যাপশট' : 'Camera Access Simulator'}
+                <Camera className="w-4 h-4" /> {dict.overlayCameraSimulator}
               </h3>
               <button 
                 id="close-camera"
@@ -351,10 +351,10 @@ export default function ActivePrayerOverlay({
                   onClick={() => setImageCaptured(null)}
                   className="px-4 py-2 bg-emerald-700 hover:bg-emerald-600 text-white font-medium rounded-lg text-xs cursor-pointer"
                 >
-                  {lang === 'bn' ? 'আবার ছবি তুলুন' : 'Take another snapshot'}
+                  {dict.overlayCameraRetake}
                 </button>
               ) : (
-                lang === 'bn' ? 'জরুরি প্রয়োজনে ছবি তোলার সুবিধার জন্য ক্যামেরা সচল।' : 'Essential camera tools allowed for general convenience/security during overlay.'
+                dict.overlayCameraDesc
               )}
             </div>
             <canvas ref={canvasRef} className="hidden" />
@@ -407,7 +407,7 @@ export default function ActivePrayerOverlay({
             {dict.lockCurrentSessionLabel}
           </p>
           <h1 className="font-display font-black text-white text-3xl md:text-5xl tracking-tight mb-2 drop-shadow-md select-all">
-            {getPrayerName(activeSchedule.name, lang)} {lang === 'bn' ? 'সালাত' : 'Salah'}
+            {getPrayerName(activeSchedule.name, lang)} {dict.generalPrayerSuffix}
           </h1>
 
           <div className="font-mono text-5xl md:text-7xl font-bold tracking-tight text-[#D4AF37] my-4 tabular-nums select-all">
@@ -464,7 +464,7 @@ export default function ActivePrayerOverlay({
               id="emergency-tool-dismiss"
               disabled={!allowedTools.includes('alarmDismiss')}
               onClick={() => {
-                alert(lang === 'bn' ? "অ্যালার্ম সাময়িকভাবে স্তব্ধ করা হয়েছে।" : "Simulated alarm has been silenced.");
+                alert(dict.overlayAlarmSilenced);
               }}
               className="group p-3 bg-[#11241C] border border-emerald-900/60 hover:bg-[#1C3B2E] transition-all rounded-xl text-left flex flex-col justify-between gap-4 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
             >
@@ -518,10 +518,10 @@ export default function ActivePrayerOverlay({
               <div className="flex items-center gap-2 mb-6">
                 <span className="bg-[#122E22] px-3 py-1 rounded-full text-[10px] uppercase font-bold tracking-widest text-[#D4AF37]">
                   {activeContent.type === 'quran' 
-                    ? (lang === 'bn' ? '📖 কুরআনুল কারীম' : '📖 Noble Quran') 
+                    ? dict.overlayQuranTitle 
                     : activeContent.type === 'hadith' 
-                      ? (lang === 'bn' ? '🤲 সহীহ হাদীস' : '🤲 Authentic Hadith') 
-                      : (lang === 'bn' ? '💡 আত্মিক বাণী' : '💡 Serene Reminder')
+                      ? dict.overlayHadithTitle 
+                      : dict.overlayDevotionTitle
                   }
                 </span>
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
@@ -559,8 +559,8 @@ export default function ActivePrayerOverlay({
           {!showExitWall ? (
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-emerald-950/10 border border-emerald-950 px-4 py-3 rounded-xl">
               <div>
-                <p className="text-xs text-white font-semibold">{lang === 'bn' ? 'জরুরি প্রস্থান প্রয়োজন?' : 'Emergency exit required?'}</p>
-                <p className="text-[10px] text-zinc-400">{lang === 'bn' ? 'অর্গুলার লক ভাঙতে আত্ম-সচেতনতা ফিল্টার অতিক্রম করুন।' : 'Unrestricted system requires deep conscious action.'}</p>
+                <p className="text-xs text-white font-semibold">{dict.overlayEmergencyTitle}</p>
+                <p className="text-[10px] text-zinc-400">{dict.overlayEmergencySubtitle}</p>
               </div>
               <button 
                 id="initiate-emergency-bypass"

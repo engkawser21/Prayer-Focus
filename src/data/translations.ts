@@ -240,6 +240,75 @@ export interface TranslationDictionary {
   prayerTahajjud: string;
   prayerDuha: string;
   prayerCustomFocus: string;
+
+  // New properties for absolute 100% localization
+  overlayQuranTitle: string;
+  overlayHadithTitle: string;
+  overlayDevotionTitle: string;
+  overlayEmergencyTitle: string;
+  overlayEmergencySubtitle: string;
+  sandboxTitle: string;
+  gameCandyCrush: string;
+  simLaunchOverlay: string;
+  simAutoplayReels: string;
+  gameCandyTitle: string;
+  errorPrayerName: string;
+  errorTimesRequired: string;
+  errorEndTimeLower: string;
+  errorActiveDayRequired: string;
+  cityDropdownPlaceholder: string;
+  alertGpsFinished: string;
+  descFajr: string;
+  descDhuhr: string;
+  descAsr: string;
+  descMaghrib: string;
+  descIsha: string;
+  descTahajjud: string;
+  descDuha: string;
+  statChartPrayed: string;
+  statLegendCompleted: string;
+  statLegendLater: string;
+  statLegendFree: string;
+  statSpiritualAdvice: string;
+  generalPrayerSuffix: string;
+  logDateLabel: string;
+  logStateCompleted: string;
+  logStateLater: string;
+  logStateMissed: string;
+  tooltipDeleteLog: string;
+  languageLabel: string;
+  quranTransFormatLabel: string;
+  quranFormatArabicOnly: string;
+  quranFormatArabicBangla: string;
+  quranFormatArabicEnglish: string;
+  developerLabel: string;
+  emailAddressLabel: string;
+  emailActionBtn: string;
+  visitActionBtn: string;
+  devName: string;
+  devEmail: string;
+  devFacebook: string;
+  devFacebookUrl: string;
+  overlayEmergencyGlobal: string;
+  overlayEmergencyFamily: string;
+  overlayEmergencyPlaceholder: string;
+  overlayCameraSimulator: string;
+  overlayCameraRetake: string;
+  overlayCameraDesc: string;
+  overlayAlarmSilenced: string;
+  socialFeed1Caption: string;
+  socialFeed2Caption: string;
+  socialFeed3Caption: string;
+  socialFeed1Likes: string;
+  socialFeed2Likes: string;
+  socialFeed3Likes: string;
+  daySun: string;
+  dayMon: string;
+  dayTue: string;
+  dayWed: string;
+  dayThu: string;
+  dayFri: string;
+  daySat: string;
 }
 
 export const translations: Record<'en' | 'bn', TranslationDictionary> = {
@@ -468,7 +537,76 @@ export const translations: Record<'en' | 'bn', TranslationDictionary> = {
     prayerIsha: "Isha",
     prayerTahajjud: "Tahajjud",
     prayerDuha: "Duha",
-    prayerCustomFocus: "Focus Session"
+    prayerCustomFocus: "Focus Session",
+
+    // New English Localizations
+    overlayQuranTitle: "📖 Noble Quran",
+    overlayHadithTitle: "🤲 Authentic Hadith",
+    overlayDevotionTitle: "💡 Serene Reminder",
+    overlayEmergencyTitle: "Emergency exit required?",
+    overlayEmergencySubtitle: "Unrestricted system requires deep conscious action.",
+    sandboxTitle: "Accessibility Service Sandbox",
+    gameCandyCrush: "Candy Crush",
+    simLaunchOverlay: "Launching Prayer focus overlays...",
+    simAutoplayReels: "Auto-playing reels...",
+    gameCandyTitle: "Candy Crush Surge",
+    errorPrayerName: "Please provide a descriptive prayer name.",
+    errorTimesRequired: "Start and End times are required.",
+    errorEndTimeLower: "The end time must exceed the start time.",
+    errorActiveDayRequired: "Please select at least one active day.",
+    cityDropdownPlaceholder: "--- Choose standard City ---",
+    alertGpsFinished: "GPS lookup finished! Calculated closest city coordinates.",
+    descFajr: "(Dawn)",
+    descDhuhr: "(Noon)",
+    descAsr: "(Afternoon)",
+    descMaghrib: "(Sunset)",
+    descIsha: "(Night)",
+    descTahajjud: "(Vigil)",
+    descDuha: "(Forenoon)",
+    statChartPrayed: "Prayed",
+    statLegendCompleted: "Completed",
+    statLegendLater: "Remaining/Later",
+    statLegendFree: "Free Slots",
+    statSpiritualAdvice: "Habituating daily routines eliminates friction",
+    generalPrayerSuffix: "Salah",
+    logDateLabel: "Logged Date:",
+    logStateCompleted: "✓ Completed",
+    logStateLater: "⏳ Prayed Later",
+    logStateMissed: "✗ Missed",
+    tooltipDeleteLog: "Delete log",
+    languageLabel: "Language Settings",
+    quranTransFormatLabel: "Quran Translation Display Format:",
+    quranFormatArabicOnly: "1. Original Arabic Only",
+    quranFormatArabicBangla: "2. Arabic + English/Bangla Translation",
+    quranFormatArabicEnglish: "3. Arabic + English Translation",
+    developerLabel: "Developer",
+    emailAddressLabel: "Email Address",
+    emailActionBtn: "Email",
+    visitActionBtn: "Visit",
+    devName: "Engr MD Kawser Ahmd",
+    devEmail: "engkawser21@gmail.com",
+    devFacebook: "facebook.com/engkawser21",
+    devFacebookUrl: "https://www.facebook.com/engkawser21/",
+    overlayEmergencyGlobal: "911 (Global Emergency)",
+    overlayEmergencyFamily: "Family Guardian",
+    overlayEmergencyPlaceholder: "Enter phone number...",
+    overlayCameraSimulator: "Camera Access Simulator",
+    overlayCameraRetake: "Take another snapshot",
+    overlayCameraDesc: "Essential camera tools allowed for general convenience/security during overlay.",
+    overlayAlarmSilenced: "Simulated alarm has been silenced.",
+    socialFeed1Caption: "Just 5 more minutes of endless scrolling before I pray... 😅",
+    socialFeed2Caption: "Leveling up in the latest dungeon! Don't disturb me! 🎮🔥",
+    socialFeed3Caption: "Deep frying butter for absolutely no healthy reason at 1 PM...",
+    socialFeed1Likes: "128k",
+    socialFeed2Likes: "52k",
+    socialFeed3Likes: "1.2M",
+    daySun: "Su",
+    dayMon: "Mo",
+    dayTue: "Tu",
+    dayWed: "We",
+    dayThu: "Th",
+    dayFri: "Fr",
+    daySat: "Sa"
   },
   bn: {
     appName: "প্রেয়ার ফোকাস",
@@ -695,7 +833,76 @@ export const translations: Record<'en' | 'bn', TranslationDictionary> = {
     prayerIsha: "এশা",
     prayerTahajjud: "তাহাজ্জুদ",
     prayerDuha: "দোহা",
-    prayerCustomFocus: "কাস্টম ফোকাস সেশন"
+    prayerCustomFocus: "কাস্টম ফোকাস সেশন",
+
+    // New Bangla Localizations
+    overlayQuranTitle: "📖 কুরআনুল কারীম",
+    overlayHadithTitle: "🤲 সহীহ হাদীস",
+    overlayDevotionTitle: "💡 আত্মিক বাণী",
+    overlayEmergencyTitle: "জরুরি প্রস্থান প্রয়োজন?",
+    overlayEmergencySubtitle: "অর্গুলার লক ভাঙতে আত্ম-সচেতনতা ফিল্টার অতিক্রম করুন।",
+    sandboxTitle: "অ্যাক্সেসিবিলিটি সার্ভিস কুঠুরি",
+    gameCandyCrush: "ক্যান্ডি ক্রাশ",
+    simLaunchOverlay: "লক ওভারলে স্ক্রিন চালু হচ্ছে...",
+    simAutoplayReels: "অটোপ্লে শর্টস চলছে...",
+    gameCandyTitle: "ক্যান্ডি ক্রাশ ডোপামিন",
+    errorPrayerName: "দয়া করে একটি সঠিক নামাজের নাম দিন।",
+    errorTimesRequired: "শুরু এবং শেষ সময় নেওয়া আবশ্যক।",
+    errorEndTimeLower: "শেষ সময় অবশ্যই শুরু সময়ের চেয়ে বেশি হতে হবে।",
+    errorActiveDayRequired: "দয়া করে কমপক্ষে একটি সক্রিয় দিন নির্বাচন করুন।",
+    cityDropdownPlaceholder: "--- নিকটবর্তী শহর ---",
+    alertGpsFinished: "জিপিএস গণনা সমাপ্ত! আপনার নিকটবর্তী জিপিএস শহর লোড হয়েছে।",
+    descFajr: "(উষা)",
+    descDhuhr: "(দুপুর)",
+    descAsr: "(বিকাল)",
+    descMaghrib: "(সূর্যাস্ত)",
+    descIsha: "(রাত্রিকাল)",
+    descTahajjud: "(শেষ রাত)",
+    descDuha: "(পূর্বাহ্ন)",
+    statChartPrayed: "আদায় করা হয়েছে",
+    statLegendCompleted: "ওয়াক্তমত সম্পন্ন হয়েছে",
+    statLegendLater: "দেরি হয়েছে / পরে",
+    statLegendFree: "ফ্রি স্লট",
+    statSpiritualAdvice: "নিয়মিত সালাত আদায় আত্মিক ও মানসিক প্রশান্তি বাড়ায়",
+    generalPrayerSuffix: "সালাত",
+    logDateLabel: "লগ করার তারিখ:",
+    logStateCompleted: "✓ আদায় করা হয়েছে",
+    logStateLater: "⏳ পরে আদায় করেছি",
+    logStateMissed: "✗ মিস হয়েছে",
+    tooltipDeleteLog: "লগ মুছুন",
+    languageLabel: "ভাষা সেটিংস",
+    quranTransFormatLabel: "কুরআনের বাণী অনুবাদ প্রদর্শনীর প্রকার:",
+    quranFormatArabicOnly: "১. শুধুমাত্র মূল আরবি (Arabic Only)",
+    quranFormatArabicBangla: "২. আরবি + বাংলা অনুবাদ",
+    quranFormatArabicEnglish: "৩. আরবি + ইংরেজি অনুবাদ (Arabic + English)",
+    developerLabel: "ডেভেলপার",
+    emailAddressLabel: "ইমেইল এড্রেস",
+    emailActionBtn: "ইমেইল করুন",
+    visitActionBtn: "ভিজিট করুন",
+    devName: "ইঞ্জি. মোঃ কাওসার আহমেদ (Engr MD Kawser Ahmd)",
+    devEmail: "engkawser21@gmail.com",
+    devFacebook: "facebook.com/engkawser21",
+    devFacebookUrl: "https://www.facebook.com/engkawser21/",
+    overlayEmergencyGlobal: "৯১১ (জরুরি সেবা)",
+    overlayEmergencyFamily: "পারিবারিক অভিভাবক",
+    overlayEmergencyPlaceholder: "ফোন নাম্বার লিখুন...",
+    overlayCameraSimulator: "জরুরি ক্যামেরা স্ন্যাপশট",
+    overlayCameraRetake: "আবার ছবি তুলুন",
+    overlayCameraDesc: "জরুরি প্রয়োজনে ছবি তোলার সুবিধার জন্য ক্যামেরা সচল।",
+    overlayAlarmSilenced: "অ্যালার্ম সাময়িকভাবে স্তব্ধ করা হয়েছে।",
+    socialFeed1Caption: "নামাজ পড়ার আগে আর মাত্র ৫ মিনিট স্ক্রল করে নিই... 😅",
+    socialFeed2Caption: "নতুন গেমের লেভেল পার করছি! কেউ ডিস্টার্ব করবেন না! 🎮🔥",
+    socialFeed3Caption: "দুপুর ১ টায় একদম স্বাস্থ্যকর নয় এমন সব খাবার বানিয়ে ভাইরাল হওয়া...",
+    socialFeed1Likes: "১২৮k",
+    socialFeed2Likes: "৫২k",
+    socialFeed3Likes: "১.২M",
+    daySun: "রবি",
+    dayMon: "সোম",
+    dayTue: "মঙ্গল",
+    dayWed: "বুধ",
+    dayThu: "বৃহ",
+    dayFri: "শুক্র",
+    daySat: "শনি"
   }
 };
 

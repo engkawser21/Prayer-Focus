@@ -49,22 +49,14 @@ export default function SchedulesTab({
   const [activeDays, setActiveDays] = useState<number[]>([0, 1, 2, 3, 4, 5, 6]);
   const [formError, setFormError] = useState<string>('');
 
-  const daysOfWeek = lang === 'bn' ? [
-    { label: 'রবি', val: 0 },
-    { label: 'সোম', val: 1 },
-    { label: 'মঙ্গল', val: 2 },
-    { label: 'বুধ', val: 3 },
-    { label: 'বৃহ', val: 4 },
-    { label: 'শুক্র', val: 5 },
-    { label: 'শনি', val: 6 },
-  ] : [
-    { label: 'Su', val: 0 },
-    { label: 'Mo', val: 1 },
-    { label: 'Tu', val: 2 },
-    { label: 'We', val: 3 },
-    { label: 'Th', val: 4 },
-    { label: 'Fr', val: 5 },
-    { label: 'Sa', val: 6 },
+  const daysOfWeek = [
+    { label: dict.daySun, val: 0 },
+    { label: dict.dayMon, val: 1 },
+    { label: dict.dayTue, val: 2 },
+    { label: dict.dayWed, val: 3 },
+    { label: dict.dayThu, val: 4 },
+    { label: dict.dayFri, val: 5 },
+    { label: dict.daySat, val: 6 },
   ];
 
   const handleDayToggle = (dayVal: number) => {
@@ -80,12 +72,12 @@ export default function SchedulesTab({
     setFormError('');
 
     if (!newName.trim()) {
-      setFormError(lang === 'bn' ? 'দয়া করে একটি সঠিক নামাজের নাম দিন।' : 'Please provide a descriptive prayer name.');
+      setFormError(dict.errorPrayerName);
       return;
     }
 
     if (!startTime || !endTime) {
-      setFormError(lang === 'bn' ? 'শুরু এবং শেষ সময় নেওয়া আবশ্যক।' : 'Start and End times are required.');
+      setFormError(dict.errorTimesRequired);
       return;
     }
 
@@ -96,12 +88,12 @@ export default function SchedulesTab({
     const endMins = endH * 60 + endM;
 
     if (endMins <= startMins) {
-      setFormError(lang === 'bn' ? 'শেষ সময় অবশ্যই শুরু সময়ের চেয়ে বেশি হতে হবে।' : 'The end time must exceed the start time.');
+      setFormError(dict.errorEndTimeLower);
       return;
     }
 
     if (activeDays.length === 0) {
-      setFormError(lang === 'bn' ? 'দয়া করে কমপক্ষে একটি সক্রিয় দিন নির্বাচন করুন।' : 'Please select at least one active day.');
+      setFormError(dict.errorActiveDayRequired);
       return;
     }
 
@@ -164,7 +156,7 @@ export default function SchedulesTab({
                 defaultValue=""
                 className="w-full text-xs bg-zinc-50 dark:bg-[#14221C] border border-zinc-200 dark:border-emerald-900/40 p-2.5 rounded-xl font-sans text-zinc-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-emerald-500"
               >
-                <option value="" disabled>{lang === 'bn' ? '--- নিকটবর্তী শহর ---' : '--- Choose standard City ---'}</option>
+                <option value="" disabled>{dict.cityDropdownPlaceholder}</option>
                 {cityPresets.map(preset => (
                   <option key={preset.name} value={preset.name}>
                     🕌 {preset.name} ({lang === 'bn' && preset.name === 'Dhaka' ? 'বাংলাদেশ' : preset.country})
@@ -179,10 +171,11 @@ export default function SchedulesTab({
                 onClick={() => {
                   const randomPreset = cityPresets[Math.floor(Math.random() * cityPresets.length)];
                   onLoadCityPreset(randomPreset);
-                  alert(lang === 'bn' 
-                    ? `🌍 জিপিএস লোকেশন পাওয়া গেছে: নিকটবর্তী শহর ${randomPreset.name} (${randomPreset.country}) লোড করা হয়েছে!` 
-                    : `🌍 Simulated GPS Location Lookup: Found closest city: ${randomPreset.name}, ${randomPreset.country}. Loaded times!`
-                  );
+                  const countryLabel = lang === 'bn' && randomPreset.name === 'Dhaka' ? 'বাংলাদেশ' : randomPreset.country;
+                  const alertMsg = dict.alertGpsFinished
+                    .replace('{city}', randomPreset.name)
+                    .replace('{country}', countryLabel);
+                  alert(alertMsg);
                 }}
                 className="text-xs text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 font-bold flex items-center gap-1.5 justify-center mx-auto"
               >
@@ -245,13 +238,13 @@ export default function SchedulesTab({
                       onChange={(e) => setNewName(e.target.value)}
                       className="w-full text-xs bg-zinc-50 dark:bg-[#14221C] border border-zinc-200 dark:border-emerald-900/40 p-2.5 rounded-xl text-zinc-800 dark:text-white mt-1 focus:outline-none"
                     >
-                      <option value="Fajr">{dict.prayerFajr} {lang === 'bn' ? '(উষা)' : '(Dawn)'}</option>
-                      <option value="Dhuhr">{dict.prayerDhuhr} {lang === 'bn' ? '(দুপুর)' : '(Noon)'}</option>
-                      <option value="Asr">{dict.prayerAsr} {lang === 'bn' ? '(বিকাল)' : '(Afternoon)'}</option>
-                      <option value="Maghrib">{dict.prayerMaghrib} {lang === 'bn' ? '(সূর্যাস্ত)' : '(Sunset)'}</option>
-                      <option value="Isha">{dict.prayerIsha} {lang === 'bn' ? '(রাত্রিকাল)' : '(Night)'}</option>
-                      <option value="Tahajjud">{dict.prayerTahajjud} {lang === 'bn' ? '(শেষ রাত)' : '(Vigil)'}</option>
-                      <option value="Duha">{dict.prayerDuha} {lang === 'bn' ? '(পূর্বাহ্ন)' : '(Forenoon)'}</option>
+                      <option value="Fajr">{dict.prayerFajr} {dict.descFajr}</option>
+                      <option value="Dhuhr">{dict.prayerDhuhr} {dict.descDhuhr}</option>
+                      <option value="Asr">{dict.prayerAsr} {dict.descAsr}</option>
+                      <option value="Maghrib">{dict.prayerMaghrib} {dict.descMaghrib}</option>
+                      <option value="Isha">{dict.prayerIsha} {dict.descIsha}</option>
+                      <option value="Tahajjud">{dict.prayerTahajjud} {dict.descTahajjud}</option>
+                      <option value="Duha">{dict.prayerDuha} {dict.descDuha}</option>
                       <option value="Focus Session">{dict.prayerCustomFocus}</option>
                     </select>
                   </div>
@@ -290,7 +283,7 @@ export default function SchedulesTab({
                           type="button"
                           id={`select-day-${day.val}`}
                           onClick={() => handleDayToggle(day.val)}
-                          className={`w-9 h-9 rounded-full text-xs font-bold transition-all border ${
+                          className={`w-11 h-11 rounded-full text-xs font-bold transition-all border ${
                             isActive 
                               ? 'bg-emerald-600 text-white border-emerald-500 shadow-sm' 
                               : 'bg-zinc-50 dark:bg-zinc-900 text-zinc-500 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100'

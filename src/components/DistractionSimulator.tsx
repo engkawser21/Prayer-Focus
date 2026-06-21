@@ -33,14 +33,10 @@ export default function DistractionSimulator({
   const [socialScrollIndex, setSocialScrollIndex] = useState<number>(0);
 
   // Fake scrolling content presets for realistic apps
-  const mockTikTokFeeds = lang === 'bn' ? [
-    { creator: "@scrolling_infinite", caption: "নামাজ পড়ার আগে আর মাত্র ৫ মিনিট স্ক্রল করে নিই... 😅", likes: "১২৮k", hashtags: "#relatable #funny #reels" },
-    { creator: "@gaming_pro", caption: "নতুন গেমের লেভেল পার করছি! কেউ ডিস্টার্ব করবেন না! 🎮🔥", likes: "৫২k", hashtags: "#gamer #rpg #trending" },
-    { creator: "@foodie_snack", caption: "দুপুর ১ টায় একদম স্বাস্থ্যকর নয় এমন সব খাবার বানিয়ে ভাইরাল হওয়া...", likes: "১.২M", hashtags: "#delicious #cooking #reels #viral" }
-  ] : [
-    { creator: "@scrolling_infinite", caption: "Just 5 more minutes of endless scrolling before I pray... 😅", likes: "128k", hashtags: "#relatable #funny #reels" },
-    { creator: "@gaming_pro", caption: "Leveling up in the latest dungeon! Don't disturb me! 🎮🔥", likes: "52k", hashtags: "#gamer #rpg #trending" },
-    { creator: "@foodie_snack", caption: "Deep frying butter for absolutely no healthy reason at 1 PM...", likes: "1.2M", hashtags: "#delicious #cooking #reels #viral" }
+  const mockTikTokFeeds = [
+    { creator: "@scrolling_infinite", caption: dict.socialFeed1Caption, likes: dict.socialFeed1Likes, hashtags: "#relatable #funny #reels" },
+    { creator: "@gaming_pro", caption: dict.socialFeed2Caption, likes: dict.socialFeed2Likes, hashtags: "#gamer #rpg #trending" },
+    { creator: "@foodie_snack", caption: dict.socialFeed3Caption, likes: dict.socialFeed3Likes, hashtags: "#delicious #cooking #reels #viral" }
   ];
 
   // Intercept trigger when they try to use it during an active prayer session
@@ -63,7 +59,7 @@ export default function DistractionSimulator({
       {/* Block Information explanation & controller */}
       <div className="flex-1 space-y-4">
         <div className="inline-flex bg-emerald-50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-400 font-sans text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider">
-          💡 {lang === 'bn' ? 'অ্যাক্সেসিবিলিটি সার্ভিস কুঠুরি' : 'Accessibility Service Sandbox'}
+          💡 {dict.sandboxTitle}
         </div>
 
         <h2 className="font-display font-black text-2xl tracking-tight text-zinc-900 dark:text-white">
@@ -159,7 +155,7 @@ export default function DistractionSimulator({
             >
               <span className="p-2.5 bg-amber-500 text-zinc-950 rounded-lg text-xs font-bold">🎮</span>
               <div>
-                <p className="text-xs font-bold text-zinc-800 dark:text-zinc-100">{lang === 'bn' ? 'ক্যান্ডি ক্রাশ' : 'Candy Crush'}</p>
+                <p className="text-xs font-bold text-zinc-800 dark:text-zinc-100">{dict.gameCandyCrush}</p>
                 <p className="text-[10px] text-zinc-400">{dict.gamingTag}</p>
               </div>
             </button>
@@ -196,7 +192,7 @@ export default function DistractionSimulator({
                 />
               </div>
               <p className="text-[10px] uppercase font-mono text-[#D4AF37] tracking-wider animate-pulse">
-                {lang === 'bn' ? 'লক ওভারলে স্ক্রিন চালু হচ্ছে...' : 'Launching Prayer focus overlays...'}
+                {dict.simLaunchOverlay}
               </p>
             </motion.div>
           )}
@@ -227,7 +223,7 @@ export default function DistractionSimulator({
                     <span className="absolute inset-0 bg-gradient-to-tr from-indigo-950/40 to-pink-950/20" />
                     <Play className="w-10 h-10 text-white opacity-40 group-hover:opacity-100 transition-opacity" />
                     <div className="absolute bottom-2 left-2 text-[10px] bg-black/40 px-2 py-0.5 rounded text-[#D4AF37]">
-                      🎬 {lang === 'bn' ? 'অটোপ্লে শর্টস চলছে...' : 'Auto-playing reels...'}
+                      🎬 {dict.simAutoplayReels}
                     </div>
                   </div>
                 </div>
@@ -253,7 +249,7 @@ export default function DistractionSimulator({
               /* Simulated Candy Game screen */
               <div className="flex-1 flex flex-col justify-between items-center p-4 bg-gradient-to-b from-indigo-900 to-purple-950">
                 <div className="text-center py-4 space-y-1">
-                  <p className="text-[10px] uppercase font-mono tracking-widest text-[#D4AF37] font-bold">{lang === 'bn' ? 'ক্যান্ডি ক্রাশ ডোপামিন' : 'Candy Crush Surge'}</p>
+                  <p className="text-[10px] uppercase font-mono tracking-widest text-[#D4AF37] font-bold">{dict.gameCandyTitle}</p>
                   <h5 className="font-display text-white text-md font-extrabold">{dict.candyLevel} 9,842</h5>
                 </div>
 

@@ -63,22 +63,14 @@ export default function StatsTab({
   const uniquePrayers = Object.keys(prayerBreakdown);
 
   // Fallback default statistics for demonstration if zero logs exist
-  const dummyWeeklyData = lang === 'bn' ? [
-    { day: 'সোম', completed: 4, total: 5 },
-    { day: 'মঙ্গল', completed: 5, total: 5 },
-    { day: 'বুধ', completed: 3, total: 5 },
-    { day: 'বৃহ', completed: 4, total: 5 },
-    { day: 'শুক্র', completed: 5, total: 5 },
-    { day: 'শনি', completed: 2, total: 5 },
-    { day: 'রবি', completed: 4, total: 5 },
-  ] : [
-    { day: 'Mon', completed: 4, total: 5 },
-    { day: 'Tue', completed: 5, total: 5 },
-    { day: 'Wed', completed: 3, total: 5 },
-    { day: 'Thu', completed: 4, total: 5 },
-    { day: 'Fri', completed: 5, total: 5 },
-    { day: 'Sat', completed: 2, total: 5 },
-    { day: 'Sun', completed: 4, total: 5 },
+  const dummyWeeklyData = [
+    { day: dict.dayMon, completed: 4, total: 5 },
+    { day: dict.dayTue, completed: 5, total: 5 },
+    { day: dict.dayWed, completed: 3, total: 5 },
+    { day: dict.dayThu, completed: 4, total: 5 },
+    { day: dict.dayFri, completed: 5, total: 5 },
+    { day: dict.daySat, completed: 2, total: 5 },
+    { day: dict.daySun, completed: 4, total: 5 },
   ];
 
   return (
@@ -154,7 +146,7 @@ export default function StatsTab({
           <div className="space-y-4">
             <div className="relative h-44 w-full flex items-end justify-between pt-6 px-2 font-mono">
               {dummyWeeklyData.map((data, index) => {
-                const totalText = lang === 'bn' ? 'আদায় করা হয়েছে' : 'Prayed';
+                const totalText = dict.statChartPrayed;
                 return (
                   <div key={index} className="flex-1 flex flex-col items-center group relative cursor-pointer">
                     {/* Tooltip on hover */}
@@ -182,15 +174,15 @@ export default function StatsTab({
             <div className="flex flex-wrap gap-4 items-center justify-center text-[10px] pt-4 border-t border-zinc-50 dark:border-emerald-950/45">
               <span className="flex items-center gap-1">
                 <span className="w-2.5 h-2.5 rounded bg-emerald-600" /> 
-                {lang === 'bn' ? 'ওয়াক্তমত সম্পন্ন হয়েছে' : 'Completed'}
+                {dict.statLegendCompleted}
               </span>
               <span className="flex items-center gap-1">
                 <span className="w-2.5 h-2.5 rounded bg-[#D4AF37]" /> 
-                {lang === 'bn' ? 'দেরি হয়েছে / পরে' : 'Remaining/Later'}
+                {dict.statLegendLater}
               </span>
               <span className="flex items-center gap-1">
                 <span className="w-2.5 h-2.5 rounded bg-zinc-100 dark:bg-emerald-950/30" /> 
-                {lang === 'bn' ? 'ফ্রি স্লট' : 'Free Slots'}
+                {dict.statLegendFree}
               </span>
             </div>
           </div>
@@ -235,7 +227,7 @@ export default function StatsTab({
           </div>
 
           <div className="mt-4 pt-3 border-t border-zinc-100 dark:border-emerald-950/45 text-center text-[10px] text-zinc-400 italic">
-            {lang === 'bn' ? 'নিয়মিত সালাত আদায় আত্মিক ও মানসিক প্রশান্তি বাড়ায়' : 'Habituating daily routines eliminates friction'}
+            {dict.statSpiritualAdvice}
           </div>
         </div>
 
@@ -287,10 +279,10 @@ export default function StatsTab({
 
                   <div>
                     <h5 className="font-bold text-zinc-850 dark:text-white select-all">
-                      {getPrayerName(log.prayerName, lang)} {lang === 'bn' ? 'সালাত' : 'Prayer'}
+                      {getPrayerName(log.prayerName, lang)} {dict.generalPrayerSuffix}
                     </h5>
                     <p className="text-[10px] text-zinc-400 font-mono text-left">
-                      {lang === 'bn' ? 'লগ করার তারিখ:' : 'Logged Date:'} {log.date}
+                      {dict.logDateLabel} {log.date}
                     </p>
                   </div>
                 </div>
@@ -304,16 +296,16 @@ export default function StatsTab({
                     onChange={(e) => onUpdateLogStatus(log.id, e.target.value as any)}
                     className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-1.5 rounded-lg text-[10px] text-zinc-600 dark:text-zinc-300 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                   >
-                    <option value="completed">{lang === 'bn' ? '✓ আদায় করা হয়েছে' : '✅ Completed'}</option>
-                    <option value="later">{lang === 'bn' ? '⏳ পরে আদায় করেছি' : '🕒 Prayed Later'}</option>
-                    <option value="missed">{lang === 'bn' ? '✗ মিস হয়েছে' : '❌ Missed'}</option>
+                    <option value="completed">{dict.logStateCompleted}</option>
+                    <option value="later">{dict.logStateLater}</option>
+                    <option value="missed">{dict.logStateMissed}</option>
                   </select>
 
                   <button 
                     id={`delete-single-log-${log.id}`}
                     onClick={() => onDeleteLog(log.id)}
                     className="p-1.5 text-zinc-400 hover:text-red-500 rounded hover:bg-zinc-100 transition-colors"
-                    title={lang === 'bn' ? 'লগ মুছুন' : 'Delete log'}
+                    title={dict.tooltipDeleteLog}
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>

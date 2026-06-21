@@ -72,17 +72,14 @@ export default function SettingsTab({
         
         {/* Left Column: Language Selection & Security Config */}
         <div className="space-y-6">
-          
           {/* Dedicated Language Selection Section as requested */}
           <div className="bg-white dark:bg-[#0B120F] border border-[#0000000d] dark:border-emerald-950/60 rounded-3xl p-6 shadow-sm space-y-4">
             <h3 className="font-display font-bold text-[#D4AF37] text-sm uppercase tracking-wider flex items-center gap-2">
               <Globe className="w-4 h-4 text-emerald-600" />
-              {lang === 'bn' ? 'ভাষা / Language Settings' : 'Language'}
+              {dict.languageLabel}
             </h3>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
-              {lang === 'bn' 
-                ? 'আপনার পছন্দের ভাষা নির্বাচন করুন। এটি করার সাথে সাথে সম্পূর্ণ অ্যাপটি তাৎক্ষণিকভাবে পরিবর্তিত হয়ে যাবে।' 
-                : 'Select your preferred language. Apply instantly across entire application interfaces.'}
+              {dict.chooseLanguage}
             </p>
 
             <div className="grid grid-cols-2 gap-3 pt-1">
@@ -280,7 +277,7 @@ export default function SettingsTab({
 
               <div className="pt-3 border-t border-zinc-50 dark:border-emerald-950/45 space-y-2">
                 <label className="text-xs font-bold text-zinc-800 dark:text-white block">
-                  {lang === 'bn' ? 'কুরআনের বাণী অনুবাদ প্রদর্শনীর প্রকার:' : 'Quran Translation Display Format:'}
+                  {dict.quranTransFormatLabel}
                 </label>
                 
                 <div className="space-y-1.5 pt-1">
@@ -293,7 +290,7 @@ export default function SettingsTab({
                       className="text-emerald-600 focus:ring-emerald-500 w-4 h-4"
                     />
                     <span className="text-xs text-zinc-700 dark:text-zinc-200 font-medium">
-                      {lang === 'bn' ? '১. শুধুমাত্র মূল আরবি (Arabic Only)' : '1. Original Arabic Only'}
+                      {dict.quranFormatArabicOnly}
                     </span>
                   </label>
 
@@ -306,7 +303,7 @@ export default function SettingsTab({
                       className="text-emerald-600 focus:ring-emerald-500 w-4 h-4"
                     />
                     <span className="text-xs text-zinc-700 dark:text-zinc-200 font-medium font-sans">
-                      {lang === 'bn' ? '২. আরবি + বাংলা অনুবাদ' : '2. Arabic + Bangla Translation'}
+                      {dict.quranFormatArabicBangla}
                     </span>
                   </label>
 
@@ -319,7 +316,7 @@ export default function SettingsTab({
                       className="text-emerald-600 focus:ring-emerald-500 w-4 h-4"
                     />
                     <span className="text-xs text-zinc-700 dark:text-zinc-200 font-medium">
-                      {lang === 'bn' ? '৩. আরবি + ইংরেজি অনুবাদ (Arabic + English)' : '3. Arabic + English Translation'}
+                      {dict.quranFormatArabicEnglish}
                     </span>
                   </label>
                 </div>
@@ -386,8 +383,8 @@ export default function SettingsTab({
               <div className="flex items-center gap-3">
                 <span className="p-2 bg-emerald-100 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 rounded-xl text-lg leading-none shrink-0 font-mono">👨‍💻</span>
                 <div>
-                  <p className="text-[10px] text-zinc-400 uppercase tracking-widest font-semibold">{lang === 'bn' ? 'ডেভেলপার' : 'Developer'}</p>
-                  <p className="text-xs font-bold text-zinc-800 dark:text-white">Engr MD Kawser Ahmd</p>
+                  <p className="text-[10px] text-zinc-400 uppercase tracking-widest font-semibold">{dict.developerLabel}</p>
+                  <p className="text-xs font-bold text-zinc-800 dark:text-white">{dict.devName}</p>
                 </div>
               </div>
 
@@ -395,15 +392,15 @@ export default function SettingsTab({
                 <div className="flex items-center gap-3">
                   <span className="p-2 bg-emerald-100 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 rounded-xl text-lg leading-none shrink-0 font-mono">📧</span>
                   <div>
-                    <p className="text-[10px] text-zinc-400 uppercase tracking-widest font-semibold">{lang === 'bn' ? 'ইমেইল এড্রেস' : 'Email Address'}</p>
-                    <p className="text-xs font-mono font-bold text-zinc-800 dark:text-white select-all">engkawser21@gmail.com</p>
+                    <p className="text-[10px] text-zinc-400 uppercase tracking-widest font-semibold">{dict.emailAddressLabel}</p>
+                    <p className="text-xs font-mono font-bold text-zinc-800 dark:text-white select-all">{dict.devEmail}</p>
                   </div>
                 </div>
                 <a 
-                  href="mailto:engkawser21@gmail.com"
+                  href={`mailto:${dict.devEmail}`}
                   className="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-lg text-[10px] transition-colors"
                 >
-                  {lang === 'bn' ? 'ইমেইল করুন' : 'Email'}
+                  {dict.emailActionBtn}
                 </a>
               </div>
 
@@ -413,22 +410,22 @@ export default function SettingsTab({
                   <div>
                     <p className="text-[10px] text-zinc-400 uppercase tracking-widest font-semibold">Facebook</p>
                     <a 
-                      href="https://www.facebook.com/engkawser21/" 
+                      href={dict.devFacebookUrl} 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-xs font-semibold text-emerald-600 dark:text-[#D4AF37] hover:underline break-all"
                     >
-                      facebook.com/engkawser21
+                      {dict.devFacebook}
                     </a>
                   </div>
                 </div>
                 <a 
-                  href="https://www.facebook.com/engkawser21/" 
+                  href={dict.devFacebookUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-[#D4AF37] border border-[#D4AF37]/20 font-bold rounded-lg text-[10px] transition-colors"
                 >
-                  {lang === 'bn' ? 'ভিজিট করুন' : 'Visit'}
+                  {dict.visitActionBtn}
                 </a>
               </div>
             </div>
