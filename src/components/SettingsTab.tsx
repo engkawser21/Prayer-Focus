@@ -371,6 +371,69 @@ export default function SettingsTab({
             </div>
           </div>
 
+          {/* Contact & Support Section */}
+          <div className="bg-white dark:bg-[#0B120F] border border-zinc-100 dark:border-emerald-950/60 rounded-3xl p-6 shadow-sm space-y-4">
+            <h3 className="font-display font-bold text-zinc-800 dark:text-white text-sm uppercase tracking-wider flex items-center gap-2">
+              <span className="text-emerald-600">✉️</span>
+              {dict.contactHeader}
+            </h3>
+            
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-normal">
+              {dict.contactDesc}
+            </p>
+
+            <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-[#111B17] border border-zinc-100 dark:border-emerald-950/50 space-y-3">
+              <div className="flex items-center gap-3">
+                <span className="p-2 bg-emerald-100 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 rounded-xl text-lg leading-none shrink-0 font-mono">👨‍💻</span>
+                <div>
+                  <p className="text-[10px] text-zinc-400 uppercase tracking-widest font-semibold">{lang === 'bn' ? 'ডেভেলপার' : 'Developer'}</p>
+                  <p className="text-xs font-bold text-zinc-800 dark:text-white">Engr MD Kawser Ahmd</p>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between gap-2 border-t border-zinc-200/40 dark:border-emerald-950/40 pt-2.5">
+                <div className="flex items-center gap-3">
+                  <span className="p-2 bg-emerald-100 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 rounded-xl text-lg leading-none shrink-0 font-mono">📧</span>
+                  <div>
+                    <p className="text-[10px] text-zinc-400 uppercase tracking-widest font-semibold">{lang === 'bn' ? 'ইমেইল এড্রেস' : 'Email Address'}</p>
+                    <p className="text-xs font-mono font-bold text-zinc-800 dark:text-white select-all">engkawser21@gmail.com</p>
+                  </div>
+                </div>
+                <a 
+                  href="mailto:engkawser21@gmail.com"
+                  className="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-lg text-[10px] transition-colors"
+                >
+                  {lang === 'bn' ? 'ইমেইল করুন' : 'Email'}
+                </a>
+              </div>
+
+              <div className="flex items-center justify-between gap-2 border-t border-zinc-200/40 dark:border-emerald-950/40 pt-2.5">
+                <div className="flex items-center gap-3">
+                  <span className="p-2 bg-emerald-100 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 rounded-xl text-lg leading-none shrink-0 font-mono">🌐</span>
+                  <div>
+                    <p className="text-[10px] text-zinc-400 uppercase tracking-widest font-semibold">Facebook</p>
+                    <a 
+                      href="https://www.facebook.com/engkawser21/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-xs font-semibold text-emerald-600 dark:text-[#D4AF37] hover:underline break-all"
+                    >
+                      facebook.com/engkawser21
+                    </a>
+                  </div>
+                </div>
+                <a 
+                  href="https://www.facebook.com/engkawser21/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-[#D4AF37] border border-[#D4AF37]/20 font-bold rounded-lg text-[10px] transition-colors"
+                >
+                  {lang === 'bn' ? 'ভিজিট করুন' : 'Visit'}
+                </a>
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </div>

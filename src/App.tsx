@@ -915,13 +915,20 @@ export default function App() {
         )}
       </main>
 
-      {/* Footer copyright */}
-      <footer className="border-t border-zinc-100 dark:border-emerald-950/45 py-6 shrink-0 bg-white dark:bg-[#070F0C] text-center text-xs text-zinc-400 select-none">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p>{dict.copyrightText}</p>
-          <div className="flex gap-4 font-mono text-[10px]">
-            <span className="text-emerald-600 dark:text-emerald-400 font-bold">● {dict.offlineSecureBadge}</span>
-            <span>{dict.systemVersionBadge}</span>
+       {/* Footer copyright */}
+      <footer className="border-t border-zinc-100 dark:border-emerald-950/45 py-8 shrink-0 bg-white dark:bg-[#070F0C] text-xs text-zinc-400 select-none">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="space-y-1 text-center md:text-left">
+            <p className="font-semibold text-zinc-800 dark:text-zinc-200">{dict.copyrightText}</p>
+            <p className="text-zinc-500 dark:text-zinc-400 font-medium">{dict.developedBy}</p>
+          </div>
+          
+          <div className="text-center md:text-right space-y-1">
+            <p className="max-w-md text-zinc-550 dark:text-zinc-400">{dict.helpingMuslims}</p>
+            <div className="flex justify-center md:justify-end gap-3 font-mono text-[10px] mt-1">
+              <span className="text-emerald-600 dark:text-emerald-400 font-bold">● {dict.offlineSecureBadge}</span>
+              <span className="text-zinc-500">{dict.versionLabel}</span>
+            </div>
           </div>
         </div>
       </footer>

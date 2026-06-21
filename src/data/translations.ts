@@ -218,10 +218,18 @@ export interface TranslationDictionary {
   factoryResetConfirm: string;
   factoryWipeSuccess: string;
 
+  // Contact / Support
+  contactHeader: string;
+  contactDesc: string;
+  contactDeveloper: string;
+
   // Footer / Common
   offlineSecureBadge: string;
   systemVersionBadge: string;
   copyrightText: string;
+  developedBy: string;
+  helpingMuslims: string;
+  versionLabel: string;
 
   // Prayers Name Map
   prayerFajr: string;
@@ -441,9 +449,17 @@ export const translations: Record<'en' | 'bn', TranslationDictionary> = {
     factoryResetConfirm: "Factory Reset? This cleans all coordinates, preferences, logs, and custom timings completely and reverts to system setup.",
     factoryWipeSuccess: "Local Storage wiped! Reverted configuration variables to factory standards.",
 
+    // Contact / Support
+    contactHeader: "Contact & Support",
+    contactDesc: "For feedback, suggestions, or bug reports, feel free to reach out.",
+    contactDeveloper: "Developer: Engr MD Kawser Ahmd",
+
     offlineSecureBadge: "OFFLINE SECURE",
     systemVersionBadge: "SYSTEM VERSION v1.0 (MVP)",
-    copyrightText: "© 2026 Prayer Focus. Focus on Salah. Disconnect from Distractions.",
+    copyrightText: "© 2026 Prayer Focus. All rights reserved.",
+    developedBy: "Developed by: Engr MD Kawser Ahmd",
+    helpingMuslims: "Helping Muslims stay focused during Salah and reduce digital distractions.",
+    versionLabel: "Version 1.0 (MVP)",
 
     prayerFajr: "Fajr",
     prayerDhuhr: "Dhuhr",
@@ -660,9 +676,17 @@ export const translations: Record<'en' | 'bn', TranslationDictionary> = {
     factoryResetConfirm: "আপনি কি অ্যাপলকে সব সেটিংস এবং রুটিন মুছে ফ্যাক্টরি ডিফল্ট করতে চান?",
     factoryWipeSuccess: "সফলভাবে পূর্বের সব সেটিংস ও নামাজের রুটিন মুছে ফেলা হয়েছে!",
 
+    // Contact / Support
+    contactHeader: "যোগাযোগ ও সহায়তা (Contact & Support)",
+    contactDesc: "আপনার মতামত, পরামর্শ বা যেকোনো ত্রুটির রিপোর্ট পাঠাতে নির্দ্বিধায় যোগাযোগ করুন।",
+    contactDeveloper: "ডেভেলপার: ইঞ্জি. মোঃ কাওসার আহমেদ (Engr MD Kawser Ahmd)",
+
     offlineSecureBadge: "অফলাইন এবং শতভাগ নিরাপদ",
     systemVersionBadge: "সংস্করণ v1.0 (এমভিপি)",
-    copyrightText: "© ২০২৬ প্রেয়ার ফোকাস। সালাতে মনোযোগ দিন। মনোযোগ বিঘ্নকারী অ্যাপ থেকে দূরে থাকুন।",
+    copyrightText: "© ২০২৬ প্রেয়ার ফোকাস। সর্বস্বত্ব সংরক্ষিত।",
+    developedBy: "ডেভেলপড বাই: ইঞ্জি. মোঃ কাওসার আহমেদ (Engr MD Kawser Ahmd)",
+    helpingMuslims: "সালাতের সময় মুসলমানদের মনোযোগী রাখতে এবং ডিজিটাল বিভ্রান্তি কমাতে সাহায্য করছে।",
+    versionLabel: "সংস্করণ ১.০ (এমভিপি)",
 
     prayerFajr: "ফজর",
     prayerDhuhr: "যোহর",
