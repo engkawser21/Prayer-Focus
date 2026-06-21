@@ -184,7 +184,7 @@ export default function DashboardTab({
             <div className="grid grid-cols-2 gap-2">
               <button 
                 id="test-lock-dhuhr"
-                onClick={() => onManualTriggerLock('Dhuhr', 5)}
+                onClick={() => onManualTriggerLock('Dhuhr', 1)}
                 className="p-3 bg-white dark:bg-[#15231E] border border-zinc-200 dark:border-[#204033] rounded-xl hover:border-emerald-500 transition-all text-left flex flex-col justify-between min-h-[58px] cursor-pointer focus:outline-none focus:ring-1 focus:ring-emerald-500"
               >
                 <span className="text-[9px] text-[#D4AF37] font-extrabold pb-0.5">LAUNCH PRESET</span>
@@ -193,7 +193,7 @@ export default function DashboardTab({
 
               <button 
                 id="test-lock-tahajjud"
-                onClick={() => onManualTriggerLock('Tahajjud', 10)}
+                onClick={() => onManualTriggerLock('Tahajjud', 2)}
                 className="p-3 bg-white dark:bg-[#15231E] border border-zinc-200 dark:border-[#204033] rounded-xl hover:border-emerald-500 transition-all text-left flex flex-col justify-between min-h-[58px] cursor-pointer focus:outline-none focus:ring-1 focus:ring-emerald-500"
               >
                 <span className="text-[9px] text-[#D4AF37] font-extrabold pb-0.5">LAUNCH PRESET</span>
