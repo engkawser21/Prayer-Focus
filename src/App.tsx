@@ -123,18 +123,50 @@ export default function App() {
 
   // Check custom draw overlay permission if on Native Android platform
   useEffect(() => {
+    const checkPermission = () => {
+      if (Capacitor.isNativePlatform()) {
+        KioskMode.checkDrawOverlayPermission()
+          .then((res) => {
+            setHasOverlayPermission(res.granted);
+          })
+          .catch((err) => {
+            console.warn('Overlay check failed:', err);
+          });
+      }
+    };
+
+    // Initial run
+    checkPermission();
+
+    // Recheck permission when app becomes active again (returned from settings)
+    let stateListener: any = null;
     if (Capacitor.isNativePlatform()) {
-      KioskMode.checkDrawOverlayPermission()
-        .then((res) => {
-          setHasOverlayPermission(res.granted);
-        })
-        .catch((err) => {
-          console.warn('Overlay check failed:', err);
-        });
+      CapApp.addListener('appStateChange', (state) => {
+        if (state.isActive) {
+          checkPermission();
+        }
+      }).then((listener) => {
+        stateListener = listener;
+      });
     }
+
+    // Also watch tab visibility
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') {
+        checkPermission();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    return () => {
+      if (stateListener) {
+        stateListener.remove();
+      }
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
   }, []);
 
-  // Live request overlay trigger that starts a check loop
+  // Live request overlay trigger that automatically registers check loops
   const handleRequestOverlayPermission = () => {
     if (Capacitor.isNativePlatform()) {
       KioskMode.requestDrawOverlayPermission()
@@ -934,31 +966,56 @@ export default function App() {
       {/* Main Container Layout Body */}
       <main id="main-content-layout" className="flex-1 max-w-7xl mx-auto px-4 md:px-8 py-5 md:py-8 pb-24 w-full">
         
-        {!hasOverlayPermission && (
-          <div className="mb-6 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/40 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm font-sans">
-            <div className="flex gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5 sm:mt-0" />
-              <div>
-                <h4 className="text-xs font-bold text-amber-900 dark:text-amber-200">
+        <AnimatePresence>
+          {!hasOverlayPermission && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-zinc-950/85 backdrop-blur-md z-50 flex items-center justify-center p-4 font-sans"
+            >
+              <motion.div 
+                initial={{ scale: 0.95, y: 15 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.95, y: 15 }}
+                className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 max-w-md w-full shadow-2xl relative overflow-hidden text-center"
+              >
+                {/* Decorative Pattern Accent */}
+                <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-amber-500" />
+                
+                <div className="mx-auto w-14 h-14 bg-amber-50 dark:bg-amber-950/20 rounded-full flex items-center justify-center mb-4 border border-amber-200 dark:border-amber-900/40">
+                  <ShieldCheck className="w-7 h-7 text-amber-600 dark:text-amber-400" />
+                </div>
+
+                <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 leading-snug">
                   {lang === 'bn' ? 'ড্র ওভার অ্যাপস পারমিশন প্রয়োজন' : 'Overlay Permission Required'}
-                </h4>
-                <p className="text-[10px] text-amber-700 dark:text-amber-400/80 mt-0.5 leading-normal">
+                </h3>
+
+                <p className="text-xs text-zinc-650 dark:text-zinc-400 mt-3 leading-relaxed">
                   {lang === 'bn' 
-                    ? 'নামাযের সময় অন্যান্য অ্যাপের উপর লক স্ক্রিন প্রদর্শন এবং কঠোর স্ক্রিন ওভারলে গার্ড সক্ষম করতে "System Alert Window" পারমিশন প্রয়োজন।' 
-                    : 'We need the "System Alert Window" permission to draw the lock screen overlay over other apps and prevent minimization during prayer times.'
+                    ? 'নামাযের সময় বা ড্র করা ওভারলেতে ফোন স্ক্রিন লক করতে এই অ্যাপটির "Display over other apps" পারমিশন প্রয়োজন। পরবর্তী স্ক্রিনে অনুগ্রহ করে অনুমতি সচল করুন।' 
+                    : "To lock the screen during prayer times, this app needs the 'Display over other apps' permission. Please enable it in the next screen."
                   }
                 </p>
-              </div>
-            </div>
-            <button
-              id="btn-request-overlay-permission"
-              onClick={handleRequestOverlayPermission}
-              className="px-4 py-1.5 self-stretch sm:self-auto bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-[11px] font-bold transition-all cursor-pointer shadow-sm select-none"
-            >
-              {lang === 'bn' ? 'অনুমতি দিন' : 'Grant Permission'}
-            </button>
-          </div>
-        )}
+
+                <div className="mt-6 flex flex-col gap-2">
+                  <button
+                    id="btn-modal-grant-overlay"
+                    onClick={handleRequestOverlayPermission}
+                    className="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold rounded-2xl text-xs transition-all shadow-md active:scale-[0.99] cursor-pointer"
+                  >
+                    {lang === 'bn' ? 'অনুমতি দিন (Grant Permission)' : 'Grant Permission'}
+                  </button>
+
+                  <div className="flex items-center justify-center gap-1.5 text-[10px] text-zinc-400 dark:text-zinc-500 mt-2">
+                    <span className="inline-block w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping" />
+                    <span>{lang === 'bn' ? 'অনুমতি সচল করার পর স্বয়ংক্রিয়ভাবে চালু হবে' : 'Will update automatically once granted'}</span>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {activeTab === 'dashboard' && (
           <DashboardTab 
