@@ -5,6 +5,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { registerPlugin, Capacitor } from '@capacitor/core';
+import { App as CapApp } from '@capacitor/app';
 import { 
   Clock, 
   Flame, 
@@ -15,6 +17,8 @@ import {
   Zap,
   TrendingUp,
   Settings,
+  ShieldCheck,
+  AlertTriangle
 } from 'lucide-react';
 
 import { PrayerSchedule, PrayerLog, UserPreferences, CityPreset } from './types';
@@ -25,6 +29,17 @@ import SettingsTab from './components/SettingsTab';
 import DistractionSimulator from './components/DistractionSimulator';
 import ActivePrayerOverlay from './components/ActivePrayerOverlay';
 import { translations, getPrayerName } from './data/translations';
+
+// Define the KioskMode interface for TS type-safety
+export interface KioskModePlugin {
+  startKiosk(): Promise<{ status: string }>;
+  stopKiosk(): Promise<{ status: string }>;
+  checkDrawOverlayPermission(): Promise<{ granted: boolean }>;
+  requestDrawOverlayPermission(): Promise<{ status: string }>;
+}
+
+// Register KioskMode custom plugin
+export const KioskMode = registerPlugin<KioskModePlugin>('KioskMode');
 
 // Pre-seeded initial prayer schedules matching the product prompt
 const DEFAULT_SCHEDULES: PrayerSchedule[] = [
@@ -102,6 +117,57 @@ export default function App() {
     id: string;
     isSimulated: boolean;
   } | null>(null);
+
+  // Native Overlay Permission status tracking & Kiosk Mode state triggers
+  const [hasOverlayPermission, setHasOverlayPermission] = useState<boolean>(true);
+
+  // Check custom draw overlay permission if on Native Android platform
+  useEffect(() => {
+    if (Capacitor.isNativePlatform()) {
+      KioskMode.checkDrawOverlayPermission()
+        .then((res) => {
+          setHasOverlayPermission(res.granted);
+        })
+        .catch((err) => {
+          console.warn('Overlay check failed:', err);
+        });
+    }
+  }, []);
+
+  // Live request overlay trigger that starts a check loop
+  const handleRequestOverlayPermission = () => {
+    if (Capacitor.isNativePlatform()) {
+      KioskMode.requestDrawOverlayPermission()
+        .then((res) => {
+          console.log('Permission status requested:', res.status);
+          const interval = setInterval(() => {
+            KioskMode.checkDrawOverlayPermission().then((check) => {
+              if (check.granted) {
+                setHasOverlayPermission(true);
+                clearInterval(interval);
+              }
+            });
+          }, 1000);
+          setTimeout(() => clearInterval(interval), 20000);
+        })
+        .catch((err) => console.error('Error requesting permission:', err));
+    }
+  };
+
+  // Turn on Kiosk (LockTask) Mode when activeLockMode is enabled, and turn off when set to null
+  useEffect(() => {
+    if (Capacitor.isNativePlatform()) {
+      if (activeLockMode) {
+        KioskMode.startKiosk()
+          .then(() => console.log('[Native] Lock Task Mode started successfully.'))
+          .catch((err) => console.error('[Native] Failed starting lock task mode:', err));
+      } else {
+        KioskMode.stopKiosk()
+          .then(() => console.log('[Native] Lock Task Mode exited successfully.'))
+          .catch((err) => console.error('[Native] Failed stopping lock task mode:', err));
+      }
+    }
+  }, [activeLockMode]);
 
   // Completion Form modal state
   const [showCompletionForm, setShowCompletionForm] = useState<{
@@ -867,6 +933,33 @@ export default function App() {
 
       {/* Main Container Layout Body */}
       <main id="main-content-layout" className="flex-1 max-w-7xl mx-auto px-4 md:px-8 py-5 md:py-8 pb-24 w-full">
+        
+        {!hasOverlayPermission && (
+          <div className="mb-6 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/40 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm font-sans">
+            <div className="flex gap-3">
+              <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5 sm:mt-0" />
+              <div>
+                <h4 className="text-xs font-bold text-amber-900 dark:text-amber-200">
+                  {lang === 'bn' ? 'ড্র ওভার অ্যাপস পারমিশন প্রয়োজন' : 'Overlay Permission Required'}
+                </h4>
+                <p className="text-[10px] text-amber-700 dark:text-amber-400/80 mt-0.5 leading-normal">
+                  {lang === 'bn' 
+                    ? 'নামাযের সময় অন্যান্য অ্যাপের উপর লক স্ক্রিন প্রদর্শন এবং কঠোর স্ক্রিন ওভারলে গার্ড সক্ষম করতে "System Alert Window" পারমিশন প্রয়োজন।' 
+                    : 'We need the "System Alert Window" permission to draw the lock screen overlay over other apps and prevent minimization during prayer times.'
+                  }
+                </p>
+              </div>
+            </div>
+            <button
+              id="btn-request-overlay-permission"
+              onClick={handleRequestOverlayPermission}
+              className="px-4 py-1.5 self-stretch sm:self-auto bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-[11px] font-bold transition-all cursor-pointer shadow-sm select-none"
+            >
+              {lang === 'bn' ? 'অনুমতি দিন' : 'Grant Permission'}
+            </button>
+          </div>
+        )}
+
         {activeTab === 'dashboard' && (
           <DashboardTab 
             schedules={schedules}
